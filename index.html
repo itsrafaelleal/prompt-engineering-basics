@@ -1402,30 +1402,39 @@ Rafael Leal
 </p>
 
 </div>
-
 </section>
+
 <footer>
   <div id="visit-counter">
-    Visitas: <span id="visits">Carregando...</span>
+    Visitas: <span id="visits">0</span>
   </div>
 </footer>
 
 <script>
-async function updateCounter() {
+document.addEventListener("DOMContentLoaded", async () => {
+
   try {
+
     const response = await fetch(
-      'https://api.countapi.xyz/hit/prompt-engineering-basics/visits'
+      "https://api.countapi.xyz/hit/rafaelpromptsite/visits"
     );
 
     const data = await response.json();
 
-    document.getElementById('visits').innerText = data.value;
-  } catch (error) {
-    console.error('Erro ao carregar contador:', error);
-  }
-}
+    document.getElementById("visits").innerText = data.value;
 
-updateCounter();
+  } catch (error) {
+
+    console.error("Erro ao carregar contador:", error);
+
+    document.getElementById("visits").innerText = "Erro";
+
+  }
+
+});
 </script>
+
+</body>
+</html>
 </body>
 </html>
