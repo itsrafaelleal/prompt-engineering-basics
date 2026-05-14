@@ -1403,38 +1403,15 @@ Rafael Leal
 
 </div>
 </section>
+<footer style="text-align:center; margin-top:20px;">
 
-<footer>
-  <div id="visit-counter">
-    Visitas: <span id="visits">0</span>
-  </div>
+  <p>👁️ Visitantes</p>
 
-<footer>
-  <div id="visit-counter">
-    👁️ Visitas: <span id="visits">0</span>
-  </div>
+  <img
+    src="https://visitor-badge.laobi.icu/badge?page_id=itsrafaelleal.prompt-engineering-basics"
+    alt="contador de visitas"
+  />
+
 </footer>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-
-  fetch("https://api.countapi.xyz/hit/rafael-site/visitas")
-
-    .then(response => response.json())
-
-    .then(data => {
-      document.getElementById("visits").innerText = data.value;
-    })
-
-    .catch(error => {
-      console.log(error);
-      document.getElementById("visits").innerText = "Offline";
-    });
-
-});
-</script>
-
-</body>
-</html>
 </body>
 </html>
