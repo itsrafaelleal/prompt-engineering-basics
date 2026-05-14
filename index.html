@@ -1406,5 +1406,30 @@ Rafael Leal
 </section>
 
 </body>
+<footer>
+  <p>Feito por Rafael</p>
+
+  <div id="visit-counter">
+    Visitas: <span id="visits">Carregando...</span>
+  </div>
+</footer>
+
+<script>
+async function updateCounter() {
+  try {
+    const response = await fetch(
+      'https://api.countapi.xyz/hit/prompt-engineering-basics/visits'
+    );
+
+    const data = await response.json();
+
+    document.getElementById('visits').innerText = data.value;
+  } catch (error) {
+    console.error('Erro ao carregar contador:', error);
+  }
+}
+
+updateCounter();
+</script>
 </html>
 ```
