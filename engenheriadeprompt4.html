@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Domine o Basico de Engenharia de Prompt</title>
+<p style="margin-top:25px;">
+Criado por
+<a 
+href="https://www.linkedin.com/in/rafael-leal-79805b84/" 
+target="_blank"
+style="color:var(--primary); text-decoration:none; font-weight:600;"
+>
+Rafael Leal
+</a>
+</p>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --bg:#07111f;
+    --bg2:#0f1d30;
+    --card:#12243d;
+    --primary:#00d4ff;
+    --secondary:#7c4dff;
+    --accent:#00ffae;
+    --danger:#ff5c7a;
+    --warning:#ffcc66;
+    --text:#f5f7fa;
+    --muted:#a7b7c9;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(180deg,#06101d,#091625 40%,#08111c);
+    color:var(--text);
+    line-height:1.8;
+    overflow-x:hidden;
+}
+
+.container{
+    width:90%;
+    max-width:1200px;
+    margin:auto;
+}
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 20px;
+    position:relative;
+    overflow:hidden;
+}
+
+.hero::before{
+    content:'';
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,var(--primary),transparent 70%);
+    opacity:.12;
+    top:-250px;
+    left:-250px;
+}
+
+.hero::after{
+    content:'';
+    position:absolute;
+    width:700px;
+    height:700px;
+    background:radial-gradient(circle,var(--secondary),transparent 70%);
+    opacity:.12;
+    bottom:-250px;
+    right:-250px;
+}
+
+.hero h1{
+    font-size:4rem;
+    line-height:1.1;
+    margin-bottom:30px;
+    font-weight:800;
+}
+
+.gradient{
+    background:linear-gradient(90deg,var(--primary),var(--accent));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+}
+
+.hero p{
+    max-width:900px;
+    margin:auto;
+    color:var(--muted);
+    font-size:1.2rem;
+}
+
+.section{
+    padding:100px 0;
+}
+
+.section-title{
+    font-size:2.8rem;
+    margin-bottom:20px;
+    font-weight:800;
+}
+
+.section-sub{
+    color:var(--muted);
+    margin-bottom:60px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:rgba(18,36,61,.8);
+    border:1px solid rgba(255,255,255,.05);
+    border-radius:24px;
+    padding:30px;
+    transition:.4s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    border-color:var(--primary);
+    box-shadow:0 15px 35px rgba(0,212,255,.15);
+}
+
+.card h3{
+    color:var(--primary);
+    margin-bottom:15px;
+}
+
+.card p{
+    color:var(--muted);
+}
+
+.module{
+    background:linear-gradient(145deg,#0d1b2d,#13243c);
+    border-radius:30px;
+    padding:50px;
+    margin-bottom:40px;
+    border:1px solid rgba(255,255,255,.05);
+}
+
+.module h2{
+    color:var(--primary);
+    margin-bottom:25px;
+    font-size:2.2rem;
+}
+
+.module h3{
+    margin-top:50px;
+    margin-bottom:20px;
+    color:var(--accent);
+    font-size:1.5rem;
+}
+
+.module p{
+    color:#d7e2ec;
+    margin-bottom:18px;
+}
+
+.code{
+    background:#06111d;
+    border-left:4px solid var(--primary);
+    padding:25px;
+    border-radius:16px;
+    margin:20px 0;
+    overflow:auto;
+}
+
+.code pre{
+    color:#7ef7ff;
+    font-size:.95rem;
+}
+
+.compare{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:25px;
+    margin-top:25px;
+}
+
+.box{
+    border-radius:20px;
+    padding:25px;
+}
+
+.bad{
+    background:rgba(255,92,122,.08);
+    border:1px solid rgba(255,92,122,.25);
+}
+
+.good{
+    background:rgba(0,255,174,.08);
+    border:1px solid rgba(0,255,174,.2);
+}
+
+.bad h4{
+    color:var(--danger);
+    margin-bottom:15px;
+}
+
+.good h4{
+    color:var(--accent);
+    margin-bottom:15px;
+}
+
+.highlight{
+    color:var(--accent);
+    font-weight:600;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:25px;
+}
+
+table th{
+    background:var(--primary);
+    color:#001018;
+    padding:16px;
+    text-align:left;
+}
+
+table td{
+    background:#102036;
+    padding:16px;
+    border-bottom:1px solid rgba(255,255,255,.05);
+}
+
+ul{
+    padding-left:25px;
+}
+
+li{
+    margin-bottom:10px;
+}
+
+.cta{
+    text-align:center;
+    padding:120px 20px;
+}
+
+.cta h2{
+    font-size:3rem;
+    margin-bottom:20px;
+}
+
+.cta p{
+    color:var(--muted);
+    max-width:800px;
+    margin:auto;
+    margin-bottom:40px;
+}
+
+.button{
+    display:inline-block;
+    padding:18px 40px;
+    border-radius:50px;
+    background:linear-gradient(90deg,var(--primary),var(--secondary));
+    color:white;
+    text-decoration:none;
+    font-weight:700;
+    transition:.4s;
+}
+
+.button:hover{
+    transform:scale(1.05);
+}
+
+.footer{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--muted);
+    border-top:1px solid rgba(255,255,255,.05);
+}
+
+@media(max-width:768px){
+
+.hero h1{
+    font-size:2.5rem;
+}
+
+.compare{
+    grid-template-columns:1fr;
+}
+
+.module{
+    padding:30px;
+}
+
+.section-title{
+    font-size:2rem;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+
+<div class="container">
+
+<h1>
+Domine a base da
+<span class="gradient">Engenharia de Prompt</span>
+</h1>
+
+<p>
+Inicie no mundo IA generativa, prompting, RAG, agentes inteligentes,
+automação e arquitetura de sistemas conversacionais profissionais.
+</p>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="container">
+
+<h2 class="section-title">
+O que você vai aprender
+</h2>
+
+<p class="section-sub">
+Um conteudo inicial em prompting profissional e sistemas baseados em LLMs.
+</p>
+
+<div class="grid">
+
+<div class="card">
+<h3>Fundamentos dos LLMs</h3>
+<p>Tokens, embeddings, inferência, contexto, attention e hallucinations.</p>
+</div>
+
+<div class="card">
+<h3>Prompting</h3>
+<p>Role prompting, Few-shot, Chain of Thought, ReAct e técnicas modernas.</p>
+</div>
+
+<div class="card">
+<h3>Agentes de IA</h3>
+<p>Crie sistemas autônomos capazes de planejar e executar tarefas.</p>
+</div>
+
+<div class="card">
+<h3>RAG & Memória</h3>
+<p>Integração com documentos, memória vetorial e busca semântica.</p>
+</div>
+
+<div class="card">
+<h3>IA para Negócios</h3>
+<p>Automação, análise, produtividade e workflows inteligentes.</p>
+</div>
+
+<div class="card">
+<h3>Arquitetura de Sistemas</h3>
+<p>Como empresas constroem produtos reais usando LLMs.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="container">
+
+<div class="module">
+
+<h2>Parte 1 -Fundamentos dos LLMs</h2>
+
+<p>
+LLMs (Large Language Models) são modelos treinados para prever a próxima palavra/token
+com base em padrões aprendidos em enormes quantidades de texto.
+</p>
+
+<h3>Tokens</h3>
+
+<p>
+Os modelos não enxergam palavras como humanos.
+Eles trabalham com <span class="highlight">tokens</span>.
+</p>
+
+<div class="code">
+<pre>
+"Engenharia de Prompt"
+
+Pode virar:
+
+[ Engenharia ] [ de ] [ Prompt ]
+</pre>
+</div>
+
+<p>
+Tudo gira em torno de tokens:
+</p>
+
+<ul>
+<li>Custo</li>
+<li>Latência</li>
+<li>Memória</li>
+<li>Velocidade</li>
+<li>Janela de contexto</li>
+</ul>
+
+<h3>Context Window</h3>
+
+<p>
+É a memória temporária do modelo.
+</p>
+
+<div class="code">
+<pre>
+Inclui:
+- conversa
+- documentos
+- instruções
+- respostas
+- histórico
+</pre>
+</div>
+
+<p>
+Quando o limite é ultrapassado:
+</p>
+
+<ul>
+<li>O modelo esquece partes antigas</li>
+<li>Perde coerência</li>
+<li>Ignora instruções</li>
+</ul>
+
+<h3>Attention</h3>
+
+<p>
+Attention é o mecanismo que permite ao modelo decidir quais partes do texto merecem mais foco.
+</p>
+
+<div class="code">
+<pre>
+"João colocou o livro na mesa porque ela estava quebrada."
+
+"ela" = mesa
+</pre>
+</div>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Ambiguidade</h4>
+
+<div class="code">
+<pre>
+Explique isso:
+"Maria falou com Ana depois que ela saiu."
+</pre>
+</div>
+
+<p>
+O modelo pode interpretar incorretamente quem saiu.
+</p>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Contexto explícito</h4>
+
+<div class="code">
+<pre>
+Considere:
+- Ana saiu
+- Maria permaneceu
+
+Explique:
+"Maria falou com Ana depois que ela saiu."
+</pre>
+</div>
+
+<p>
+A atenção contextual fica muito mais precisa.
+</p>
+
+</div>
+
+</div>
+
+<h3>Temperatura</h3>
+
+<p>
+Controla criatividade versus previsibilidade.
+</p>
+
+<table>
+
+<tr>
+<th>Temperatura</th>
+<th>Resultado</th>
+</tr>
+
+<tr>
+<td>0.1</td>
+<td>Mais técnico e determinístico</td>
+</tr>
+
+<tr>
+<td>0.7</td>
+<td>Equilibrado</td>
+</tr>
+
+<tr>
+<td>1.5</td>
+<td>Mais criativo</td>
+</tr>
+
+</table>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Configuração inadequada</h4>
+
+<div class="code">
+<pre>
+Temperatura: 1.7
+
+Objetivo:
+Gerar código bancário.
+</pre>
+</div>
+
+<p>
+Maior chance de inconsistências.
+</p>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Configuração correta</h4>
+
+<div class="code">
+<pre>
+Temperatura: 0.2
+
+Objetivo:
+Gerar SQL crítico.
+</pre>
+</div>
+
+<p>
+Mais precisão e previsibilidade.
+</p>
+
+</div>
+
+</div>
+
+<h3>Embeddings</h3>
+
+<p>
+Embeddings transformam texto em vetores matemáticos.
+</p>
+
+<div class="code">
+<pre>
+"carro" ≈ "automóvel"
+</pre>
+</div>
+
+<p>
+Textos semanticamente parecidos ficam próximos no espaço vetorial.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Busca literal</h4>
+
+<div class="code">
+<pre>
+Busca apenas:
+"automóvel"
+</pre>
+</div>
+
+<p>
+Não encontra conteúdos relacionados a "carro".
+</p>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Busca semântica</h4>
+
+<div class="code">
+<pre>
+Sistema entende:
+- carro
+- veículo
+- sedan
+- hatch
+</pre>
+</div>
+
+<p>
+Resultados muito mais inteligentes.
+</p>
+
+</div>
+
+</div>
+
+<h3>Fine-Tuning</h3>
+
+<p>
+Fine-tuning significa treinar novamente o modelo para comportamento específico.
+</p>
+
+<div class="code">
+<pre>
+Exemplos:
+- jurídico
+- financeiro
+- medicina
+- suporte técnico
+</pre>
+</div>
+
+<p>
+Fine-tuning altera os pesos internos do modelo.
+</p>
+
+<h3>RAG</h3>
+
+<p>
+RAG significa:
+<span class="highlight">Retrieval-Augmented Generation</span>
+</p>
+
+<div class="code">
+<pre>
+Usuário → Busca Vetorial → Recupera Dados → LLM Responde
+</pre>
+</div>
+
+<p>
+Benefícios:
+</p>
+
+<ul>
+<li>Dados atualizados</li>
+<li>Menos hallucinations</li>
+<li>Uso de bases privadas</li>
+<li>Menor necessidade de fine-tuning</li>
+</ul>
+
+<h3>Inferência</h3>
+
+<p>
+Inferência é o momento em que o modelo gera respostas.
+</p>
+
+<h3>Hallucination</h3>
+
+<p>
+Quando o modelo inventa informações falsas.
+</p>
+
+<div class="code">
+<pre>
+- links falsos
+- números incorretos
+- fontes inexistentes
+</pre>
+</div>
+
+<h3>System Prompts</h3>
+
+<p>
+São instruções invisíveis que controlam comportamento, regras e estilo do modelo.
+</p>
+
+<div class="code">
+<pre>
+"Você é um analista financeiro rigoroso.
+Nunca invente números."
+</pre>
+</div>
+
+<h3>Latência</h3>
+
+<p>
+Tempo entre pergunta e resposta.
+</p>
+
+<h3>Custos de Contexto</h3>
+
+<p>
+Mais tokens = mais custo computacional.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="section">
+
+<div class="container">
+
+<div class="module">
+
+<h2>Parte 2 — Anatomia de um Prompt</h2>
+
+<p>
+Prompts profissionais normalmente seguem esta estrutura:
+</p>
+
+<div class="code">
+<pre>
+[ROLE]
+[CONTEXTO]
+[OBJETIVO]
+[REGRAS]
+[FORMATO]
+[EXEMPLOS]
+</pre>
+</div>
+
+<h3>Role Prompting</h3>
+
+<p>
+Você define QUEM o modelo é.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Prompt genérico</h4>
+
+<div class="code">
+<pre>
+Explique marketing.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Prompt especializado</h4>
+
+<div class="code">
+<pre>
+Você é um professor especialista
+em marketing SaaS B2B.
+
+Explique CAC e LTV.
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<h3>Context Prompting</h3>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Sem contexto</h4>
+
+<div class="code">
+<pre>
+Escreva um email.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Com contexto</h4>
+
+<div class="code">
+<pre>
+Cliente cancelou contrato devido
+a atrasos.
+
+Escreva um email empático.
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<h3>Goal Prompting</h3>
+
+<p>
+Defina claramente o objetivo.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Objetivo vago</h4>
+
+<div class="code">
+<pre>
+Analise isso.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Objetivo claro</h4>
+
+<div class="code">
+<pre>
+Analise os dados abaixo e identifique:
+
+- gargalos
+- desperdícios
+- riscos financeiros
+- oportunidades
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Fraco</h4>
+
+<div class="code">
+<pre>
+Me ajude com vendas.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Estruturado</h4>
+
+<div class="code">
+<pre>
+Crie uma estratégia B2B
+para aumentar conversões
+em 30 dias.
+
+Inclua:
+- follow-up
+- objeções
+- métricas
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<h3>Constraint Prompting</h3>
+
+<p>
+Restrições aumentam precisão.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Sem controle</h4>
+
+<div class="code">
+<pre>
+Escreva sobre IA.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Com regras</h4>
+
+<div class="code">
+<pre>
+Escreva sobre IA.
+
+Regras:
+- máximo 150 palavras
+- linguagem simples
+- usar bullets
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Inconsistente</h4>
+
+<div class="code">
+<pre>
+Crie um relatório financeiro.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Profissional</h4>
+
+<div class="code">
+<pre>
+Crie um relatório financeiro.
+
+- tom executivo
+- markdown
+- máximo 500 palavras
+- sem opiniões
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<h3>Output Formatting</h3>
+
+<div class="code">
+<pre>
+Retorne em JSON válido.
+</pre>
+</div>
+
+<div class="code">
+<pre>
+Estruture em:
+
+1. Resumo
+2. Diagnóstico
+3. Soluções
+4. Próximos passos
+</pre>
+</div>
+
+<h3>Few-shot Prompting</h3>
+
+<p>
+Few-shot ensina através de exemplos.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Sem exemplos</h4>
+
+<div class="code">
+<pre>
+Classifique:
+"Excelente produto"
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Few-shot</h4>
+
+<div class="code">
+<pre>
+Entrada: "Excelente atendimento"
+Saída: Positivo
+
+Entrada: "Péssimo serviço"
+Saída: Negativo
+
+Entrada: "Excelente produto"
+Saída:
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Estrutura vaga</h4>
+
+<div class="code">
+<pre>
+Crie títulos de marketing.
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Aprendizado por padrão</h4>
+
+<div class="code">
+<pre>
+Produto: curso IA
+Título:
+"Aprenda IA do Zero"
+
+Produto: software financeiro
+Título:
+"Automatize suas Finanças"
+
+Produto: app fitness
+Título:
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<h3>Delimitadores</h3>
+
+<p>
+Separar conteúdo reduz ambiguidades.
+</p>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Texto confuso</h4>
+
+<div class="code">
+<pre>
+Analise isso e faça resumo
+o cliente reclamou do atraso...
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Estrutura clara</h4>
+
+<div class="code">
+<pre>
+<<<TEXTO>>>
+
+Cliente reclamou do atraso.
+
+<<<FIM>>>
+
+Objetivo:
+Criar resumo executivo.
+</pre>
+</div>
+
+</div>
+
+</div>
+
+<div class="compare">
+
+<div class="box bad">
+
+<h4>❌ Mistura de contexto</h4>
+
+<div class="code">
+<pre>
+Explique isso:
+SELECT * FROM users...
+</pre>
+</div>
+
+</div>
+
+<div class="box good">
+
+<h4>✅ Delimitadores profissionais</h4>
+
+<div class="code">
+<pre>
+<<<SQL>>>
+
+SELECT * FROM users
+
+<<<FIM>>>
+
+Explique:
+- função
+- riscos
+- otimizações
+</pre>
+</div>
+
+</div>
+<div class="card">
+<h3>Agentes de IA</h3>
+
+<p>
+Agentes de IA são sistemas capazes de interpretar objetivos,
+tomar decisões e executar tarefas utilizando modelos de linguagem.
+</p>
+
+<p>
+Diferente de um chatbot simples, um agente pode:
+</p>
+
+<ul>
+<li>Planejar etapas</li>
+<li>Consultar APIs</li>
+<li>Pesquisar informações</li>
+<li>Executar ações automaticamente</li>
+<li>Tomar decisões baseadas em contexto</li>
+</ul>
+
+<p>
+Normalmente são construídos usando:
+</p>
+
+<ul>
+<li>LLMs</li>
+<li>Prompts estruturados</li>
+<li>Memória</li>
+<li>Ferramentas externas</li>
+<li>Integração com sistemas</li>
+</ul>
+
+<div class="code">
+<pre>
+Usuário → Agente → Ferramentas → Resposta
+</pre>
+</div>
+
+<p>
+Aplicações em negócios:
+</p>
+
+<ul>
+<li>Atendimento automatizado</li>
+<li>Suporte técnico</li>
+<li>Agendamento de tarefas</li>
+<li>Análise de documentos</li>
+<li>Automação operacional</li>
+<li>Assistentes corporativos</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h3>RAG & Memória</h3>
+
+<p>
+RAG significa:
+<span class="highlight">Retrieval-Augmented Generation</span>.
+</p>
+
+<p>
+É uma técnica que permite ao modelo consultar informações externas
+antes de gerar respostas.
+</p>
+
+<p>
+Em vez de depender apenas do treinamento do modelo,
+o sistema busca dados atualizados em documentos, bancos de dados
+ou arquivos internos.
+</p>
+
+<div class="code">
+<pre>
+Pergunta → Busca Vetorial → Recupera Dados → LLM Responde
+</pre>
+</div>
+
+<p>
+A memória vetorial funciona transformando textos em embeddings,
+permitindo encontrar conteúdos semanticamente parecidos.
+</p>
+
+<p>
+Busca semântica significa que o sistema entende significado,
+não apenas palavras exatas.
+</p>
+
+<div class="code">
+<pre>
+"carro" ≈ "automóvel"
+"contrato" ≈ "acordo jurídico"
+</pre>
+</div>
+
+<p>
+Aplicações em negócios:
+</p>
+
+<ul>
+<li>Chatbots com documentos internos</li>
+<li>Pesquisa corporativa inteligente</li>
+<li>Base de conhecimento</li>
+<li>Suporte jurídico</li>
+<li>Análise de contratos</li>
+<li>Consulta de políticas internas</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h3>IA para Negócios</h3>
+
+<p>
+Empresas utilizam IA para automatizar processos,
+reduzir tempo operacional e aumentar produtividade.
+</p>
+
+<p>
+Modelos de linguagem podem auxiliar em:
+</p>
+
+<ul>
+<li>Atendimento ao cliente</li>
+<li>Criação de conteúdo</li>
+<li>Análise de dados</li>
+<li>Relatórios</li>
+<li>Automação administrativa</li>
+<li>Pesquisa interna</li>
+</ul>
+
+<p>
+Esses sistemas normalmente são integrados com:
+</p>
+
+<ul>
+<li>CRMs</li>
+<li>ERPs</li>
+<li>Planilhas</li>
+<li>Bancos de dados</li>
+<li>APIs</li>
+<li>Sistemas corporativos</li>
+</ul>
+
+<div class="code">
+<pre>
+Usuário → IA → Sistema da Empresa → Resultado
+</pre>
+</div>
+
+<p>
+Objetivos mais comuns:
+</p>
+
+<ul>
+<li>Reduzir custos</li>
+<li>Escalar operações</li>
+<li>Melhorar atendimento</li>
+<li>Aumentar produtividade</li>
+<li>Automatizar tarefas repetitivas</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h3>Arquitetura de Sistemas</h3>
+
+<p>
+Produtos modernos de IA normalmente são compostos
+por múltiplas camadas trabalhando juntas.
+</p>
+
+<p>
+O modelo de linguagem é apenas uma parte do sistema.
+</p>
+
+<div class="code">
+<pre>
+Frontend → API → LLM → Banco de Dados → Ferramentas
+</pre>
+</div>
+
+<p>
+Uma arquitetura de IA pode incluir:
+</p>
+
+<ul>
+<li>Interface do usuário</li>
+<li>Backend</li>
+<li>Banco vetorial</li>
+<li>Memória</li>
+<li>APIs externas</li>
+<li>Camadas de segurança</li>
+<li>Sistemas de monitoramento</li>
+</ul>
+
+<p>
+Empresas utilizam essa estrutura para construir:
+</p>
+
+<ul>
+<li>Chatbots corporativos</li>
+<li>Copilotos de produtividade</li>
+<li>Ferramentas de análise</li>
+<li>Automação de processos</li>
+<li>Sistemas de recomendação</li>
+<li>Assistentes internos</li>
+</ul>
+
+<p>
+O objetivo é transformar modelos de linguagem
+em aplicações reais utilizadas no dia a dia.
+</p>
+
+</div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="cta">
+
+<div class="container">
+
+<h2>
+Material Introdutório de Engenharia de Prompt
+</h2>
+
+<p>
+Este projeto foi criado com objetivo educacional para ajudar iniciantes
+a entender os fundamentos da Engenharia de Prompt, IA generativa,
+LLMs, prompting estruturado, RAG e conceitos modernos de sistemas de IA.
+</p>
+
+<p style="margin-top:25px;">
+Criado por
+<a 
+href="https://www.linkedin.com/in/rafael-leal-79805b84/" 
+target="_blank"
+style="color:var(--primary); text-decoration:none; font-weight:600;"
+>
+Rafael Leal
+</a>
+</p>
+
+</div>
+
+</section>
+
+</body>
+</html>
+```
